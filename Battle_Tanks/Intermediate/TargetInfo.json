@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "Battle_Tanks",
+			"Path": "C:\\Users\\Akasa\\Desktop\\UE4\\Battle_Tanks\\Battle_Tanks\\Source\\Battle_Tanks.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "Battle_TanksEditor",
+			"Path": "C:\\Users\\Akasa\\Desktop\\UE4\\Battle_Tanks\\Battle_Tanks\\Source\\Battle_TanksEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
