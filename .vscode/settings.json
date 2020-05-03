@@ -1,0 +1,9 @@
+{
+	"files.exclude": {
+		"C:/Users/Akasa/Desktop/UE4/Battle_Tanks/.git": true,
+		"C:/Users/Akasa/Desktop/UE4/Battle_Tanks/.vscode": true,
+		"C:/Users/Akasa/Desktop/UE4/Battle_Tanks/Content": true,
+		"C:/Users/Akasa/Desktop/UE4/Battle_Tanks/Intermediate": true,
+		"C:/Users/Akasa/Desktop/UE4/Battle_Tanks/Saved": true
+	}
+}
