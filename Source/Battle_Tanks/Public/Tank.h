@@ -9,6 +9,7 @@
 class UStaticMeshComponent;
 class USpringArmComponent;
 class UCameraComponent;
+class UWidget;
 
 UCLASS()
 class BATTLE_TANKS_API ATank : public APawn
@@ -38,17 +39,29 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent *RTankTrack;
 
+	// Only going to be used for yaw rotation
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	USceneComponent *SceneComp;
+	
+	// Only going to be used for pitch rotation
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	USpringArmComponent *SpringArm;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UCameraComponent *Camera;
 
-public:	
+	UPROPERTY(EditDefaultsOnly, Category = "RotationSpeed")
+	float RotationSpeed;
+	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
+protected:
+	void MoveFoward(float Value);
+	void Turn(float Value);
+	void LookUp(float Value);
 };
