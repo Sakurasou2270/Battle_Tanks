@@ -20,6 +20,8 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
+	void AimAt(FVector HitLocation);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -42,7 +44,7 @@ protected:
 	// Only going to be used for yaw rotation
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	USceneComponent *SceneComp;
-	
+
 	// Only going to be used for pitch rotation
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	USpringArmComponent *SpringArm;
@@ -52,7 +54,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "RotationSpeed")
 	float RotationSpeed;
-	
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

@@ -38,7 +38,7 @@ ATank::ATank()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 
-	RotationSpeed = 15.f;
+	RotationSpeed = 2.f;
 }
 
 // Called when the game starts or when spawned
@@ -79,4 +79,9 @@ void ATank::Turn(float Value)
 void ATank::LookUp(float Value)
 {
 	SpringArm->AddLocalRotation(FRotator(Value, 0.f, 0.f) * RotationSpeed);
+}
+
+void ATank::AimAt(FVector HitLocation)
+{
+	// Function not implemented
 }

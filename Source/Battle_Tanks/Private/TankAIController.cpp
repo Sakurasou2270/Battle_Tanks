@@ -9,23 +9,23 @@ void ATankAIController::BeginPlay()
 {
     Super::BeginPlay();
 
-    if (GetAIController())
-    {
-        UE_LOG(LogTemp, Warning, TEXT("AI Tank %s"), *GetAIController()->GetName())
-    }
-    else
-    {
-        UE_LOG(LogTemp, Error, TEXT("Not Possessing"));
-    }
+    // if (GetAIController())
+    // {
+    //     UE_LOG(LogTemp, Warning, TEXT("AI Tank %s"), *GetAIController()->GetName())
+    // }
+    // else
+    // {
+    //     UE_LOG(LogTemp, Error, TEXT("Not Possessing"));
+    // }
 
-    if (GetPlayerTank())
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Player Tank %s"), *GetPlayerTank()->GetActorLocation().ToString());
-    }
-    else
-    {
-        UE_LOG(LogTemp, Error, TEXT("Not Possessing"));
-    }
+    // if (GetPlayerTank())
+    // {
+    //     UE_LOG(LogTemp, Warning, TEXT("Player Tank %s"), *GetPlayerTank()->GetActorLocation().ToString());
+    // }
+    // else
+    // {
+    //     UE_LOG(LogTemp, Error, TEXT("Not Possessing"));
+    // }
 }
 
 ATank *ATankAIController::GetAIController() const
