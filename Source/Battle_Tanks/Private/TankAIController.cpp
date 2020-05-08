@@ -5,6 +5,11 @@
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 
+ATankAIController::ATankAIController()
+{
+    PrimaryActorTick.bCanEverTick = true;
+}
+
 void ATankAIController::BeginPlay()
 {
     Super::BeginPlay();
@@ -25,6 +30,17 @@ void ATankAIController::BeginPlay()
     // else
     // {
     //     UE_LOG(LogTemp, Error, TEXT("Not Possessing"));
+    // }
+}
+
+void ATankAIController::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+
+    // if (GetPlayerTank())
+    // {
+    //     FVector PlayerTankLocation = GetPlayerTank()->GetActorLocation();
+    //     GetPlayerTank()->AimAt(PlayerTankLocation);
     // }
 }
 

@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
+class UTankAimingComponent;
 class ATank;
 
 UCLASS()
@@ -32,7 +33,7 @@ private:
 	// cm
 	UPROPERTY(EditAnywhere, Category = "UI")
 	float LineTraceRange = 1000000.f;
-	
+
 	ATank *GetControlledTank() const;
 	// Moving barrel towards crosshair
 	void AimTowardsCrossHair();

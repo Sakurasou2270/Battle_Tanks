@@ -3,8 +3,8 @@
 #include "Tank.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "GameFramework/PlayerController.h"
 #include "Camera/CameraComponent.h"
+#include "TankAimingComponent.h"
 #include "Components/InputComponent.h"
 
 // Sets default values
@@ -35,10 +35,13 @@ ATank::ATank()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(SceneComp);
 
-	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	Camera->SetupAttachment(SpringArm);
+	TankCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	TankCamera->SetupAttachment(SpringArm);
+
+	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(TEXT("Aiming Component"));
 
 	RotationSpeed = 2.f;
+	LaunchSpeed = 100000.f;
 }
 
 // Called when the game starts or when spawned
@@ -60,15 +63,6 @@ void ATank::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 
 	PlayerInputComponent->BindAxis("Turn", this, &ATank::Turn);
 	PlayerInputComponent->BindAxis("LookUp", this, &ATank::LookUp);
-	PlayerInputComponent->BindAxis("MoveFoward", this, &ATank::MoveFoward);
-}
-
-void ATank::MoveFoward(float Value)
-{
-	if (Value != 0.f)
-	{
-		TankBody->AddImpulse(FVector(250.f), NAME_None, true);
-	}
 }
 
 void ATank::Turn(float Value)
@@ -83,5 +77,15 @@ void ATank::LookUp(float Value)
 
 void ATank::AimAt(FVector HitLocation)
 {
-	// Function not implemented
+	// TankAimingComponent->AimAt(HitLocation);
+	// FString TankBarrelRef = TankTop->GetSocketLocation(TEXT("Turret")).ToString();
+	// UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s"), *TankBarrelRef, *HitLocation.ToString());
+	TankAimingComponent->TankBarrelRef(TankBarrel, HitLocation, LaunchSpeed);
 }
+
+// void ATank::SetTankBarrel(UStaticMeshComponent *TankBarrel1)
+// {
+// 	TankAimingComponent->SetTankBarrel(TankBarrel1);
+// }void ATank::Test() {
+// Function not implemented
+// }

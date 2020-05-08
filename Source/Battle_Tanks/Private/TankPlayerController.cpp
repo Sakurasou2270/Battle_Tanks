@@ -3,6 +3,8 @@
 #include "TankPlayerController.h"
 #include "Tank.h"
 #include "Engine/World.h"
+#include "TankAimingComponent.h"
+#include "DrawDebugHelpers.h"
 
 ATankPlayerController::ATankPlayerController()
 {
@@ -12,18 +14,16 @@ ATankPlayerController::ATankPlayerController()
 void ATankPlayerController::BeginPlay()
 {
     Super::BeginPlay();
-
-    // if (Cast<ATank>(GetPawn()))
-    // {
-    //     UE_LOG(LogTemp, Warning, TEXT("%s"), *GetControlledTank()->GetName());
-    // }
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    AimTowardsCrossHair();
+    // AimTowardsCrossHair();
+    FVector Location;
+    GetSightRayHitLocation(Location);
+    UE_LOG(LogTemp, Warning, TEXT("%s"), *Location.ToString());
 }
 
 ATank *ATankPlayerController::GetControlledTank() const
@@ -42,21 +42,16 @@ void ATankPlayerController::AimTowardsCrossHair()
 
     if (GetSightRayHitLocation(HitLocation))
     {
-        UE_LOG(LogTemp, Warning, TEXT("%s"), *HitLocation.ToString());
+        GetControlledTank()->AimAt(HitLocation);
     }
-    // get world location to crosshair
-    // linetrace it maybe??
-    // if hits the landscape
-    // tell controlled tank to aim at that point
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) const
 {
     int32 ViewportSizeX, ViewportSizeY;
     GetViewportSize(ViewportSizeX, ViewportSizeY);
-    // const FVector2D ViewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
-    // const FVector2D ViewportCenter = FVector2D(ViewportSize.X / 2, ViewportSize.Y / 2);
-    const FVector2D ViewportCenter = FVector2D(CrossHairXLocation, CrossHairYLocation);
+
+    const FVector2D ViewportCenter = FVector2D(CrossHairXLocation * ViewportSizeX, CrossHairYLocation * ViewportSizeY);
 
     FVector WorldLocation, WorldDirection;
     bool GetLookDirection = DeprojectScreenPositionToWorld(ViewportCenter.X, ViewportCenter.Y, WorldLocation, WorldDirection);
@@ -67,16 +62,15 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
     // Begin at start location and figure out what the range is
     FVector End = Start + (WorldDirection * LineTraceRange);
     FCollisionQueryParams Params;
-    if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
-    {
-        if (Hit.bBlockingHit)
-        {
-            UE_LOG(LogTemp, Warning, TEXT("%s"), *Hit.Location.ToString());
-            OutHitLocation = Hit.Location;
-            return true;
-        }
-    }
-    UE_LOG(LogTemp, Warning, TEXT("Something Else"));
-    OutHitLocation = FVector(0.f);
-    return false;
+    DrawDebugLine(GetWorld(), Start, End, FColor::Purple, true, 0, 0, 5.f);
+
+    // if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
+    // {
+    //     OutHitLocation = Hit.Location;
+    //     return true;
+    // }
+    // OutHitLocation = FVector(0.f);
+    // return false;
+    OutHitLocation = WorldDirection;
+    return true;
 }

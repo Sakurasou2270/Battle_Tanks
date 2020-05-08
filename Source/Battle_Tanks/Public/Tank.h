@@ -9,7 +9,7 @@
 class UStaticMeshComponent;
 class USpringArmComponent;
 class UCameraComponent;
-class UWidget;
+class UTankAimingComponent;
 
 UCLASS()
 class BATTLE_TANKS_API ATank : public APawn
@@ -20,7 +20,8 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
-	void AimAt(FVector HitLocation);
+	// UFUNCTION(BlueprintCallable)
+	// void SetTankBarrel(UStaticMeshComponent *TankBarrel1);
 
 protected:
 	// Called when the game starts or when spawned
@@ -50,20 +51,27 @@ protected:
 	USpringArmComponent *SpringArm;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UCameraComponent *Camera;
+	UCameraComponent *TankCamera;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UTankAimingComponent *TankAimingComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "RotationSpeed")
 	float RotationSpeed;
 
-public:
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
-protected:
-	void MoveFoward(float Value);
+private:
 	void Turn(float Value);
 	void LookUp(float Value);
+
+public:
+	void AimAt(FVector HitLocation);
 };
